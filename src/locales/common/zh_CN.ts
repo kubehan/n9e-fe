@@ -2,6 +2,7 @@ const zh_CN = {
   business_group: '业务组',
   search_placeholder: '搜索',
   nodata: '暂无数据',
+  no_premission_message: '你没有权限访问该页面, 请联系管理员!',
   btn: {
     add: '新增',
     create: '创建',

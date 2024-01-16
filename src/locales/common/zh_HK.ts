@@ -2,6 +2,7 @@ const zh_HK = {
   business_group: '業務組',
   search_placeholder: '搜尋',
   nodata: '暫無數據',
+  no_premission_message: '妳沒有權限訪問該頁面, 請聯繫管理員!',
   btn: {
     add: '新增',
     create: '創建',

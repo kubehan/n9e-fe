@@ -2,6 +2,7 @@ const en_US = {
   business_group: 'Business Group',
   search_placeholder: 'Search',
   nodata: 'No Data',
+  no_premission_message: 'You do not have permission to access this page',
   btn: {
     add: 'Add',
     create: 'Create',
