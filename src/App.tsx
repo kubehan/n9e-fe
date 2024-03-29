@@ -262,6 +262,7 @@ function App() {
               if (message === 'CUSTOM') return;
               window.confirm(message) ? callback(true) : callback(false);
             }}
+            basename='/flashcat'
           >
             <Switch>
               <Route exact path='/job-task/:busiId/output/:taskId/:outputType' component={TaskOutput} />
