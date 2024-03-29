@@ -226,7 +226,7 @@ function App() {
             };
           });
         } else {
-          const datasourceList = !_.some(['/login', '/callback'], (route) => location.pathname.startsWith(route)) ? await getDatasourceBriefList() : [];
+          const datasourceList = !_.some(['/flashcat/login', '/flashcat/callback'], (route) => location.pathname.startsWith(route)) ? await getDatasourceBriefList() : [];
           initialized.current = true;
           setCommonState((state) => {
             return {
