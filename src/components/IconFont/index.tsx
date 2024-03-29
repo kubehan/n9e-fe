@@ -16,7 +16,7 @@
  */
 import { createFromIconfontCN } from '@ant-design/icons';
 const IconFont = createFromIconfontCN({
-  scriptUrl: '/font/iconfont.js',
+  scriptUrl: '/flashcat/font/iconfont.js',
 });
 
 export default IconFont;

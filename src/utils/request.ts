@@ -65,7 +65,7 @@ request.interceptors.request.use((url, options) => {
   headers['Authorization'] = `Bearer ${localStorage.getItem(AccessTokenKey) || ''}`;
   headers['X-Language'] = i18next.language;
   return {
-    url,
+    url: '/flashcat' + url,
     options: { ...options, headers, sourcePathname: location.pathname },
   };
 });
