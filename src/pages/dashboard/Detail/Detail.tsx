@@ -381,7 +381,7 @@ export default function DetailV2(props: IProps) {
                   },
                 ]).then((res) => {
                   const ids = res.dat;
-                  window.open('/chart/' + ids);
+                  window.open('/flashcat/chart/' + ids);
                 });
               }}
               onUpdated={(res) => {

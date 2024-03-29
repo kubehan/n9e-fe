@@ -211,7 +211,7 @@ export default function Graph(props: IProps) {
                           },
                         ]).then((res) => {
                           const ids = res.dat;
-                          window.open('/chart/' + ids);
+                          window.open('/flashcat/chart/' + ids);
                         });
                       }}
                     />

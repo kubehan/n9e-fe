@@ -240,7 +240,7 @@ function App() {
       })();
     } catch (error) {
       console.error(error);
-      location.href = '/out-of-service';
+      location.href = '/flashcat/out-of-service';
     }
   }, []);
 

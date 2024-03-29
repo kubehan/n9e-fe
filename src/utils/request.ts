@@ -126,13 +126,13 @@ request.interceptors.response.use(
         });
     } else if (status === 401 && !_.includes(response.url, '/api/n9e-plus/proxy') && !_.includes(response.url, '/api/n9e/proxy')) {
       if (response.url.indexOf('/api/n9e/auth/refresh') > 0) {
-        location.href = `/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`;
+        location.href = `/flashcat/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`;
       } else {
         localStorage.getItem('refresh_token')
           ? UpdateAccessToken().then((res) => {
               console.log('401 err', res);
               if (res.err) {
-                location.href = `/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`;
+                location.href = `/flashcat/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`;
               } else {
                 const { access_token, refresh_token } = res.dat;
                 localStorage.setItem(AccessTokenKey, access_token);
@@ -140,7 +140,7 @@ request.interceptors.response.use(
                 location.href = `${location.pathname}${location.search}`;
               }
             })
-          : (location.href = `/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`);
+          : (location.href = `/flashcat/login${location.pathname != '/' ? '?redirect=' + location.pathname + location.search : ''}`);
       }
     } else if (
       status === 403 &&
@@ -153,7 +153,7 @@ request.interceptors.response.use(
         .clone()
         .json()
         .then((data) => {
-          location.href = '/403';
+          location.href = '/flashcat/403';
           if (data.error && data.error.message) throw new Error(data.error.message);
         });
     } else {
