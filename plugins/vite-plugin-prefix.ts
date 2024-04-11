@@ -19,10 +19,7 @@ export default function prefixPlugin(prefix: string) {
             path.node.arguments[0].type === 'Literal' &&
             path.node.arguments[0].value === 'img'
           ) {
-            // console.log('Found img element:', path);
             const props = path.node.arguments[1].properties;
-            // console.log('props', props);
-
             props.forEach((prop) => {
               if (prop.key.name === 'src') {
                 if (prop.value.type === 'Identifier' || prop.value.type === 'MemberExpression') {
