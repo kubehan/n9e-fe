@@ -389,6 +389,7 @@ const zh_CN = {
     fullscreen: {
       notification: {
         esc: '按 ESC 键退出全屏模式',
+        theme: '主题切换',
       },
     },
     saved: '保存成功',
@@ -440,6 +441,7 @@ const zh_CN = {
     avg: '平均值',
     sum: '总和',
     count: '数量',
+    origin: '原始值',
   },
 };
 export default zh_CN;

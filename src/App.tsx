@@ -108,8 +108,10 @@ export interface ICommonState {
   dashboardSaveMode: 'auto' | 'manual';
 }
 
+export const basePrefix = import.meta.env.VITE_PREFIX || '';
+
 // 可以匿名访问的路由 TODO: job-task output 应该也可以匿名访问
-const anonymousRoutes = ['/login', '/callback', '/chart', '/dashboards/share/'];
+const anonymousRoutes = [`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/chart`, `${basePrefix}/dashboards/share/`];
 // 判断是否是匿名访问的路由
 const anonymous = _.some(anonymousRoutes, (route) => location.pathname.startsWith(route));
 // 初始化数据 context
@@ -216,13 +218,21 @@ function App() {
           window.localStorage.setItem('curBusiId', String(defaultBusiId));
           const defaultBusinessGroupKey = commonState.businessGroup.key || busiGroups?.[0]?.id;
           window.localStorage.setItem('businessGroupKey', defaultBusinessGroupKey);
+          const ids = getCleanBusinessGroupIds(defaultBusinessGroupKey);
           initialized.current = true;
           setCommonState((state) => {
             return {
               ...state,
               profile,
               busiGroups,
-              // busiGroups: _.sortBy(busiGroups, 'name'),
+              businessGroup: commonState.businessGroup.key
+                ? commonState.businessGroup
+                : {
+                    key: _.toString(defaultBusinessGroupKey),
+                    ids,
+                    id: _.map(_.split(ids, ','), _.toNumber)?.[0],
+                    isLeaf: !_.startsWith(defaultBusinessGroupKey, 'group,'),
+                  },
               datasourceCateOptions: getAuthorizedDatasourceCates(feats, isPlus),
               groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'),
               datasourceList: datasourceList,
@@ -236,7 +246,7 @@ function App() {
             };
           });
         } else {
-          const datasourceList = !_.some(['/login', '/callback'], (route) => location.pathname.startsWith(route)) ? await getDatasourceBriefList() : [];
+          const datasourceList = !_.some([`${basePrefix}/login`, `${basePrefix}/callback`], (route) => location.pathname.startsWith(route)) ? await getDatasourceBriefList() : [];
           initialized.current = true;
           setCommonState((state) => {
             return {
@@ -250,7 +260,7 @@ function App() {
       })();
     } catch (error) {
       console.error(error);
-      location.href = '/out-of-service';
+      location.href = basePrefix + '/out-of-service';
     }
   }, []);
 
@@ -281,12 +291,13 @@ function App() {
               if (message === 'CUSTOM') return;
               window.confirm(message) ? callback(true) : callback(false);
             }}
+            basename={basePrefix}
           >
             <Switch>
               <Route exact path='/job-task/:busiId/output/:taskId/:outputType' component={TaskOutput} />
               <Route exact path='/job-task/:busiId/output/:taskId/:host/:outputType' component={TaskHostOutput} />
               <>
-                {location.pathname !== '/out-of-service' && <HeaderMenu />}
+                {location.pathname !== `${basePrefix}/out-of-service` && <HeaderMenu />}
                 <Content />
               </>
             </Switch>

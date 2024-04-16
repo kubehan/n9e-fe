@@ -383,6 +383,7 @@ const zh_HK = {
     fullscreen: {
       notification: {
         esc: '按 ESC 鍵退出全螢幕模式',
+        theme: '主題模式',
       },
     },
     saved: '保存成功',
@@ -434,6 +435,7 @@ const zh_HK = {
     avg: '平均值',
     sum: '總和',
     count: '數量',
+    origin: '原始值',
   },
 };
 
