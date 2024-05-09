@@ -6,7 +6,7 @@ export interface Record {
   name: string;
   unit: string;
   note: string;
-  expression: string;
+  expression?: string;
 }
 
 export type PostRecord = Omit<Record, 'id'>;
@@ -15,5 +15,6 @@ export type PutRecord = Record;
 export interface Filter {
   collector?: string;
   typ?: string;
+  unit?: string[];
   query?: string;
 }
