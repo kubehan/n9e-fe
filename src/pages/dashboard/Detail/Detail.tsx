@@ -323,6 +323,7 @@ export default function DetailV2(props: IProps) {
                       id={id}
                       onOpenFire={stopAutoRefresh}
                       variableConfigRefreshFlag={variableConfigRefreshFlag}
+                      dashboard={dashboard}
                     />
                   )}
                 </div>
