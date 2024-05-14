@@ -204,6 +204,7 @@ function App() {
         if (!anonymous) {
           const { dat: profile } = await GetProfile();
           const { dat: busiGroups } = await getBusiGroups();
+          const { dat: perms } = await getMenuPerm();
           const datasourceList = await getDatasourceBriefList();
           const { dat: perms } = await getMenuPerm();
           const { licenseRulesRemaining, licenseExpireDays, feats } = await getLicense(t);
