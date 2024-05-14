@@ -123,7 +123,7 @@ const Resource: React.FC = () => {
         (!teamId ||
           isDelete ||
           _.every(data.dat, (item) => {
-            return item.id !== teamId;
+            return _.toNumber(item.id) !== _.toNumber(teamId);
           })) &&
         data.dat.length > 0
       ) {
@@ -200,11 +200,11 @@ const Resource: React.FC = () => {
                     <div
                       className={classNames({
                         'n9e-metric-views-list-content-item': true,
-                        active: item.id == teamId,
+                        active: _.toNumber(item.id) === _.toNumber(teamId),
                       })}
                       key={item.id}
                       onClick={() => {
-                        if (item.id !== teamId) {
+                        if (_.toNumber(item.id) !== _.toNumber(teamId)) {
                           setTeamId(item.id as any);
                         }
                       }}
