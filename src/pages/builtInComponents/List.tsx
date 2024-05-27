@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useHistory } from 'react-router-dom';
 import { CommonStateContext } from '@/App';
 import PageLayout from '@/components/pageLayout';
+import AuthorizationWrapper from '@/components/AuthorizationWrapper';
+import { IS_PLUS } from '@/utils/constant';
 import Instructions from './Instructions';
 import AlertRules from './AlertRules';
 import CollectTpls from './CollectTpls';
@@ -64,21 +66,23 @@ export default function index() {
               allowClear
               placeholder={t('common:search_placeholder')}
             />
-            <Button
-              type='primary'
-              onClick={() => {
-                ComponentFormModal({
-                  darkMode,
-                  components: data,
-                  action: 'create',
-                  onOk: () => {
-                    fetchData();
-                  },
-                });
-              }}
-            >
-              {t('common:btn.create')}
-            </Button>
+            <AuthorizationWrapper allowedPerms={['/built-in-components/add']}>
+              <Button
+                type='primary'
+                onClick={() => {
+                  ComponentFormModal({
+                    darkMode,
+                    components: data,
+                    action: 'create',
+                    onOk: () => {
+                      fetchData();
+                    },
+                  });
+                }}
+              >
+                {t('common:btn.create')}
+              </Button>
+            </AuthorizationWrapper>
           </div>
           <div className='builtin-cates-grid'>
             {_.map(
@@ -105,42 +109,46 @@ export default function index() {
                     <div>{item.ident}</div>
                     <div className='builtin-cates-grid-item-operations'>
                       <Space size={0}>
-                        <Button
-                          size='small'
-                          type='link'
-                          className='p0'
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            ComponentFormModal({
-                              darkMode,
-                              components: data,
-                              action: 'edit',
-                              initialValues: item,
-                              onOk: () => {
-                                fetchData();
-                              },
-                            });
-                          }}
-                          icon={<EditOutlined />}
-                        />
-                        <Button
-                          size='small'
-                          type='link'
-                          danger
-                          className='p0'
-                          icon={<DeleteOutlined />}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            Modal.confirm({
-                              title: t('common:confirm.delete'),
-                              onOk: () => {
-                                deleteComponents([item.id]).then(() => {
+                        <AuthorizationWrapper allowedPerms={['/built-in-components/put']}>
+                          <Button
+                            size='small'
+                            type='link'
+                            className='p0'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              ComponentFormModal({
+                                darkMode,
+                                components: data,
+                                action: 'edit',
+                                initialValues: item,
+                                onOk: () => {
                                   fetchData();
-                                });
-                              },
-                            });
-                          }}
-                        />
+                                },
+                              });
+                            }}
+                            icon={<EditOutlined />}
+                          />
+                        </AuthorizationWrapper>
+                        <AuthorizationWrapper allowedPerms={['/built-in-components/del']}>
+                          <Button
+                            size='small'
+                            type='link'
+                            danger
+                            className='p0'
+                            icon={<DeleteOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              Modal.confirm({
+                                title: t('common:confirm.delete'),
+                                onOk: () => {
+                                  deleteComponents([item.id]).then(() => {
+                                    fetchData();
+                                  });
+                                },
+                              });
+                            }}
+                          />
+                        </AuthorizationWrapper>
                       </Space>
                     </div>
                   </div>
@@ -214,14 +222,16 @@ export default function index() {
               </Button>
             </Space>
           ) : (
-            <Button
-              type='primary'
-              onClick={() => {
-                setReadmeEditabled(!readmeEditabled);
-              }}
-            >
-              {t('common:btn.edit')}
-            </Button>
+            <AuthorizationWrapper allowedPerms={['/built-in-components/put']}>
+              <Button
+                type='primary'
+                onClick={() => {
+                  setReadmeEditabled(!readmeEditabled);
+                }}
+              >
+                {t('common:btn.edit')}
+              </Button>
+            </AuthorizationWrapper>
           ))
         }
       >
@@ -244,9 +254,11 @@ export default function index() {
                 setReadmeEditabled={setReadmeEditabled}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab={t('tab_collectTpls')} key='tab_collectTpls'>
-              <CollectTpls component={activeComponent.ident} />
-            </Tabs.TabPane>
+            {IS_PLUS && (
+              <Tabs.TabPane tab={t('tab_collectTpls')} key='tab_collectTpls'>
+                <CollectTpls component={activeComponent.ident} />
+              </Tabs.TabPane>
+            )}
             <Tabs.TabPane tab={t('tab_metrics')} key='tab_metrics'>
               <Metrics component={activeComponent.ident} />
             </Tabs.TabPane>
