@@ -302,7 +302,7 @@ export default function index(props: Props) {
                 setRefreshFlag(_.uniqueId('refreshFlag_'));
               }}
             >
-              <Button type='primary'>{t('add_btn')}</Button>
+              <Button type='primary'>{t('common:btn.create')}</Button>
             </FormModal>
           )}
           {(actionAuth.add || actionAuth.delete) && (
