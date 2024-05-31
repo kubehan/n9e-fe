@@ -53,6 +53,6 @@ const en_US = {
   quickOpenClose: 'Open/Close',
   quickSearchPlaceholder: 'Search...',
   quickMenus: 'Quick Menus',
-  "站内公告": "Notification"
+  "站内公告": "Announcements"
 };
 export default en_US;
